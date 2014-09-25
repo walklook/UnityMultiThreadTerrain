@@ -1,4 +1,4 @@
 UnityMultiThreadTerrain
 =======================
 
-Google Map style Terrain in Unity by multithread
+an example project for a unity3d game which needs a seamless world terrain like "google maps".
