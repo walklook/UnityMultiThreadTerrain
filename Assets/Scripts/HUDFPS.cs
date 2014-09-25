@@ -44,31 +44,31 @@ public class HUDFPS : MonoBehaviour
 	    // Interval ended - update GUI text and start new interval
 	    if( timeleft <= 0.0 )
 	    {
-	        // display two fractional digits (f2 format)
-		    float fps = accum / frames;
-            formatString.Remove( 0, formatString.Length); // formatString.Length = 0;
-            formatString.AppendFormat( HINT, fps );
-            guiText.text = formatString.ToString();
+		// display two fractional digits (f2 format)
+		float fps = accum / frames;
+		formatString.Remove( 0, formatString.Length); // formatString.Length = 0;
+		formatString.AppendFormat( HINT, fps );
+		guiText.text = formatString.ToString();
 	 
-            if ( fps < 30 )
-            {
-                guiText.material.color = Color.yellow;
-            }
-            else
-            {
-                if ( fps < 10 )
-                {
-                    guiText.material.color = Color.red;
-                }
-                else
-                {
-                    guiText.material.color = Color.green;
-                }
-            }
+		if ( fps < 30 )
+		{
+			guiText.material.color = Color.yellow;
+		}
+		else
+		{
+	                if ( fps < 10 )
+	                {
+	                    guiText.material.color = Color.red;
+	                }
+	                else
+	                {
+	                    guiText.material.color = Color.green;
+	                }
+		}
 
-	        timeleft = updateInterval;
-	        accum = 0.0F;
-	        frames = 0;
+		timeleft = updateInterval;
+		accum = 0.0F;
+		frames = 0;
 	    }
 	}
 }
