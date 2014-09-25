@@ -8,17 +8,17 @@ using System.Threading;
 
 public class TileNavigation : MonoBehaviour
 {
-    public struct TerrainIndex
-    {
-        public int col;
-        public int row;
+	public struct TerrainIndex
+	{
+		public int col;
+		public int row;
 
-        public TerrainIndex( int col, int row )
-        {
-            this.col = col;
-            this.row = row;
-        }
-    }
+		public TerrainIndex( int col, int row )
+		{
+			this.col = col;
+			this.row = row;
+		}
+	}
 
 	struct TerrainAttachment
 	{
@@ -36,10 +36,10 @@ public class TileNavigation : MonoBehaviour
 	public const int TERRAIN_SLICED_COLLUMN = 2;
 	public const int TERRAIN_SLICED_ROW = 2;
 	public const float TILE_SIZE = 512.0f; //2000.0f;
-    public const string TERRAIN_NAME = "Terrain_sand_1024_test_128hightmap_resolution_Slice_{0:G}_{1:G}";
-    public const string SCENE_NAME = "Terrain_sand_withman_{0:G}_{1:G}";
-    private StringBuilder terrainName = new StringBuilder( 50 );
-    private StringBuilder sceneName = new StringBuilder( 20 );
+	public const string TERRAIN_NAME = "Terrain_sand_1024_test_128hightmap_resolution_Slice_{0:G}_{1:G}";
+	public const string SCENE_NAME = "Terrain_sand_withman_{0:G}_{1:G}";
+	private StringBuilder terrainName = new StringBuilder( 50 );
+	private StringBuilder sceneName = new StringBuilder( 20 );
 	
 	private float mHalfFOV = 30.0f;
 	private float mCameraMinForward;
@@ -54,25 +54,25 @@ public class TileNavigation : MonoBehaviour
 	public static float sRightSide;
 	
 	public static List<TerrainTask> sTerrainTasks = new List<TerrainTask>();
-    public static ArrayList sTerrainRecords;
+	public static ArrayList sTerrainRecords;
 	private List<TerrainAttachment> mTerrainAttachments;
 	private int mTerrainNum = 1;
 	
 	// Use this for initialization
 	void Start()
 	{
-        mHalfFOV = camera.fieldOfView * 0.5f; // half
+		mHalfFOV = camera.fieldOfView * 0.5f; // half
 		mHalfHorizontalFOV = mHalfFOV * camera.aspect;
 		mHalfHorizontalFOV = Mathf.Deg2Rad * mHalfHorizontalFOV;
 		mCameraMinForward = Vector3.Angle( camera.transform.forward, -Vector3.up );
 		mCameraMinForward -= mHalfFOV;
 		mCameraMinForward = Mathf.Deg2Rad * mCameraMinForward;
-        mCameraMaxForward = mCameraMinForward + Mathf.Deg2Rad * camera.fieldOfView;
+		mCameraMaxForward = mCameraMinForward + Mathf.Deg2Rad * camera.fieldOfView;
 
-        sTerrainRecords = ArrayList.Synchronized( new ArrayList() );
+		sTerrainRecords = ArrayList.Synchronized( new ArrayList() );
 		UpdateCameraTile();
-        //tr.attachments.Add( GameObject.Find( "bird1" ) );
-        sTerrainRecords.Add( new TerrainIndex( mCameraCol, mCameraRow ) );
+		//tr.attachments.Add( GameObject.Find( "bird1" ) );
+		sTerrainRecords.Add( new TerrainIndex( mCameraCol, mCameraRow ) );
 		mTerrainAttachments = new List<TerrainAttachment>();
 		TerrainAttachment ta = new TerrainAttachment();
 		ta.terrain = GameObject.Find( "Terrain_original" );
@@ -86,21 +86,21 @@ public class TileNavigation : MonoBehaviour
 		UpdateCameraTile();
 		
 		Vector3 cameraPosition = camera.transform.position;
-        float viewHeight1 = cameraPosition.y * Mathf.Tan( mCameraMinForward ); // the top edge
-        float viewHeight2 = cameraPosition.y * Mathf.Tan( mCameraMaxForward ); // the bottom edge
+		float viewHeight1 = cameraPosition.y * Mathf.Tan( mCameraMinForward ); // the top edge
+		float viewHeight2 = cameraPosition.y * Mathf.Tan( mCameraMaxForward ); // the bottom edge
 		float viewWidth = cameraPosition.y / Mathf.Cos( mCameraMaxForward ) * Mathf.Tan( mHalfHorizontalFOV );
 		
-        float viewHeightCompensator1 = 40.0f; // the compensator for the top edge
-        float viewHeightCompensator2 = 40.0f; // the compensator for the bottom edge
-        float viewWidthCompensator = 40.0f; // the compensator for width
+		float viewHeightCompensator1 = 40.0f; // the compensator for the top edge
+		float viewHeightCompensator2 = 40.0f; // the compensator for the bottom edge
+		float viewWidthCompensator = 40.0f; // the compensator for width
 		
 		sTopSide = cameraPosition.x - viewHeight2 - viewHeightCompensator2 - TILE_SIZE;
 		sBottomSide = cameraPosition.x - viewHeight1 + viewHeightCompensator1 + TILE_SIZE;
 		sLeftSide = cameraPosition.z - viewWidth - viewWidthCompensator - TILE_SIZE;
 		sRightSide = cameraPosition.z + viewWidth + viewWidthCompensator + TILE_SIZE;
 		
-        /*//(column, row)//
-		        |
+		/*//(column, row)//
+		        
 		 -1, 1	|  1, 1
 				|
 		-----------------
@@ -117,10 +117,10 @@ public class TileNavigation : MonoBehaviour
         for ( int row = leftTopTile.row; row >= leftBottomTile.row; row-- )
 		{
 			if ( row == 0 ) 
-                continue;
+				continue;
 			
 			bool isBreak = false;
-            for ( int col = leftTopTile.col; col <= rightTopTile.col; col++ )
+			for ( int col = leftTopTile.col; col <= rightTopTile.col; col++ )
 			{
 				if ( col == 0 ) continue;
 				
@@ -144,8 +144,8 @@ public class TileNavigation : MonoBehaviour
 	{
 		for ( int i = 0; i < sTerrainRecords.Count; i++ )
 		{
-            TerrainIndex tr = (TerrainIndex)sTerrainRecords[i];
-            if ( tr.col == col && tr.row == row )
+			TerrainIndex tr = (TerrainIndex)sTerrainRecords[i];
+			if ( tr.col == col && tr.row == row )
 			{
 				return true;
 			}
@@ -154,14 +154,14 @@ public class TileNavigation : MonoBehaviour
 		return false;
 	}
 	
-    TerrainIndex GetTileInfo( float x, float z )
+	TerrainIndex GetTileInfo( float x, float z )
 	{
 		float rowX = x > 0 ? x + TILE_SIZE : x - TILE_SIZE;
 		int row = -(int)( rowX / TILE_SIZE );
 		float colZ = z > 0 ? z + TILE_SIZE : z - TILE_SIZE;
 		int col = (int)( colZ / TILE_SIZE );
 		
-        return new TerrainIndex( col, row );
+		return new TerrainIndex( col, row );
 	}
 	
 	void UpdateCameraTile()
@@ -180,9 +180,9 @@ public class TileNavigation : MonoBehaviour
 		GetTerrainName( col, row );
 
 #if LOAD_ADDITIVE_ASYNC
-        TerrainIndex tr = new TerrainIndex();
-        tr.col = col;
-        tr.row = row;
+		TerrainIndex tr = new TerrainIndex();
+		tr.col = col;
+		tr.row = row;
 		sTerrainRecords.Add( tr );
 
 		TerrainAttachment ta = new TerrainAttachment();
@@ -197,14 +197,14 @@ public class TileNavigation : MonoBehaviour
 			tt.terrainName = terrainName.ToString();
 			sTerrainTasks.Add( tt );
 		}
-        AsyncOperation async = Application.LoadLevelAdditiveAsync( sceneName.ToString() );
-        yield return async;
+		AsyncOperation async = Application.LoadLevelAdditiveAsync( sceneName.ToString() );
+		yield return async;
 #else
 		float z = ( col > 0 ? col - 1 : col ) * TILE_SIZE;
 		float x = -( row < 0 ? row + 1 : row ) * TILE_SIZE;
 		
-        // for memory limitation, don't cache anything.
-        Object t = Resources.Load( terrainName.ToString() ); // the prefab has been deleted from project by me, so it won't work here.
+		// for memory limitation, don't cache anything.
+		Object t = Resources.Load( terrainName.ToString() ); // the prefab has been deleted from project by me, so it won't work here.
 		TerrainRecord tr = new TerrainRecord();
 		tr.col = col;
 		tr.row = row;
@@ -262,8 +262,8 @@ public class TileNavigation : MonoBehaviour
 			}
 		}
 		
-        terrainName.Length = 0; // terrainName.Remove( 0, terrainName.Length);
-        sceneName.Length = 0;
+		terrainName.Length = 0; // terrainName.Remove( 0, terrainName.Length);
+		sceneName.Length = 0;
 		terrainName.AppendFormat( TERRAIN_NAME, terrainCol, terrainRow );
 		sceneName.AppendFormat( SCENE_NAME, terrainCol, terrainRow );
 	}
