@@ -61,7 +61,7 @@ public class TileNavigation : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-                Camera camera = Camera.main;
+		Camera camera = Camera.main;
 		mHalfFOV = camera.fieldOfView * 0.5f; // half
 		mHalfHorizontalFOV = mHalfFOV * camera.aspect;
 		mHalfHorizontalFOV = Mathf.Deg2Rad * mHalfHorizontalFOV;
@@ -110,11 +110,11 @@ public class TileNavigation : MonoBehaviour
 				|
 		//////////////////*/
 		
-                TerrainIndex leftTopTile = GetTileInfo( cameraPosition.x - viewHeight2 - viewHeightCompensator2, cameraPosition.z - viewWidth - viewWidthCompensator );
-                TerrainIndex rightTopTile = GetTileInfo( cameraPosition.x - viewHeight2 - viewHeightCompensator2, cameraPosition.z + viewWidth + viewWidthCompensator );
-                TerrainIndex leftBottomTile = GetTileInfo( cameraPosition.x - viewHeight1 + viewHeightCompensator1, cameraPosition.z - viewWidth - viewWidthCompensator );
+		TerrainIndex leftTopTile = GetTileInfo( cameraPosition.x - viewHeight2 - viewHeightCompensator2, cameraPosition.z - viewWidth - viewWidthCompensator );
+		TerrainIndex rightTopTile = GetTileInfo( cameraPosition.x - viewHeight2 - viewHeightCompensator2, cameraPosition.z + viewWidth + viewWidthCompensator );
+		TerrainIndex leftBottomTile = GetTileInfo( cameraPosition.x - viewHeight1 + viewHeightCompensator1, cameraPosition.z - viewWidth - viewWidthCompensator );
 
-                for ( int row = leftTopTile.row; row >= leftBottomTile.row; row-- )
+		for ( int row = leftTopTile.row; row >= leftBottomTile.row; row-- )
 		{
 			if ( row == 0 ) 
 				continue;
@@ -166,7 +166,7 @@ public class TileNavigation : MonoBehaviour
 	
 	void UpdateCameraTile()
 	{
-                Vector3 cameraPosition = Camera.main.transform.position;
+		Vector3 cameraPosition = Camera.main.transform.position;
 		float x = cameraPosition.x > 0 ? cameraPosition.x + TILE_SIZE : cameraPosition.x - TILE_SIZE;
 		mCameraRow = -(int)( x / TILE_SIZE );
 		float z = cameraPosition.z > 0 ? cameraPosition.z + TILE_SIZE : cameraPosition.z - TILE_SIZE;
